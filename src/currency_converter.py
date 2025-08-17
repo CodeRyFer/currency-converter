@@ -30,15 +30,17 @@ def print_currencies(currencies):
 
 def exchange_rate(currency1, currency2):
     getConversion = f"https://v6.exchangerate-api.com/v6/{API_KEY_2}/pair/{currency1}/{currency2}"
-    response = get(getConversion)
+    data = get(getConversion).json()
 
-    data = response.json()
+    if len(data) == 0:
+        print('Invalid currencies')
+        return
 
-    printer.pprint(data)
-
+    return list(data.values())[9]
 
 #data = get_currencies()
 #printer.pprint(data)
 #print_currencies(data)
 
-exchange_rate("USD", "CAD")
+rate = exchange_rate("USD", "CAD")
+print(rate)
